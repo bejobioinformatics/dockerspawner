@@ -374,9 +374,10 @@ class DockerSpawner(Spawner):
         import sys
         if data is not None:
             for k, v in data.items():
-                w = v.format(username=self.user.name, escapedusername=self.escaped_name)
-                sys.stderr.write("upgrade_kwags:: {}: {} -> {}\n\n".format(k, v, w))
-                data[k] = w
+                if isinstance(v, str):
+                    w = v.format(username=self.user.name, escapedusername=self.escaped_name)
+                    sys.stderr.write("upgrade_kwags:: {}: {} -> {}\n\n".format(k, v, w))
+                    data[k] = w
         else:
             sys.stderr.write("DATA IS NONE\n\n")
 
